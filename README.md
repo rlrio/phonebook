@@ -5,8 +5,8 @@ This repository provides source code of a phonebook web app, allowing CRUD opera
     
 ## Steps to Setup
 
-**1. Clone this repository**
-> https://github.com/rlrio/phonebook  
+**1. Clone this app**
+> https://github.com/rlrio/phonebook.git  
 
 **2. Build and run the app using maven**
 > **mvn spring-boot:run**  
