@@ -21,7 +21,7 @@ OR alternatively:
 
 > GET /users/{userId}
  
-> GET /users/search ---- поиск пользователей по имени (или его части)
+> GET /users/search ---- search user by name (or part of the name) 
 
 > POST /users/add
 
@@ -35,7 +35,7 @@ OR alternatively:
 
 > GET /users/{userId}/contacts/{contactId}
 
-> GET /users/{userId}/contacts/search ---- поиск телефонной записи по номеру телефона
+> GET /users/{userId}/contacts/search ---- search contact by phone
   
 > POST /users/{userId}/contacts/add 
  
