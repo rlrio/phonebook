@@ -15,7 +15,8 @@ OR alternatively:
 > **mvn package java -jar target/java -jar phonebook-1.0.jar**
 
 ## Explore
-
+  
+!This app runs on localhost:8081   
 **Users**
 > GET /users
 
