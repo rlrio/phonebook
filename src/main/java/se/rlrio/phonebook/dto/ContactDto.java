@@ -1,9 +1,12 @@
 package se.rlrio.phonebook.dto;
 
+import lombok.EqualsAndHashCode;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+@EqualsAndHashCode
 public class ContactDto {
     private Integer id;
     private String firstName;

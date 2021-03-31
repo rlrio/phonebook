@@ -1,10 +1,10 @@
 package se.rlrio.phonebook.dto;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@EqualsAndHashCode
 public class UserDto {
     private int id;
     @NotNull

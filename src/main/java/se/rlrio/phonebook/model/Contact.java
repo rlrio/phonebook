@@ -1,11 +1,14 @@
 package se.rlrio.phonebook.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@EqualsAndHashCode
 public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
