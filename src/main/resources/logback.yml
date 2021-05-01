@@ -1,0 +1,26 @@
+configuration:
+  property:
+    name: HOME_LOG
+    value: logs/app.log
+  appender:
+     encoder:
+        pattern: '%d{yyyy-MM-dd HH:mm:ss} %-5level [%file:%line] %msg%n'
+      name: STDOUT
+      class: ch.qos.logback.core.ConsoleAppender
+     file: '${HOME_LOG}'
+      rollingPolicy:
+        fileNamePattern: 'logs/archived/app.%d{yyyy-MM-dd}.%i.log.gz'
+        maxFileSize: 10MB
+        totalSizeCap: 20GB
+        maxHistory: '60'
+        class: ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy
+      encoder:
+        pattern: '%d{yyyy-MM-dd HH:mm:ss} %-5level [%file:%line] %msg%n'
+      name: FILE-ROLLING
+      class: ch.qos.logback.core.rolling.RollingFileAppender
+  root:
+    appender-ref:
+      ref: STDOUT
+       ref: SIFTER
+    level: INFO
+  scan: 'true'
