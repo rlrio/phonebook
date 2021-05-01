@@ -1,4 +1,4 @@
-# REST API with Spring Boot, H2DB, JPA, JUnit
+# REST API with Spring Boot, H2, JPA, JUnit
 This repository provides source code of a phonebook web app, allowing CRUD operations on users and contacts via RESTful API.
 
   
