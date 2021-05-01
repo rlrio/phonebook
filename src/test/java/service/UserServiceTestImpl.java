@@ -1,28 +1,27 @@
 package service;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import se.rlrio.phonebook.dto.UserDto;
-import se.rlrio.phonebook.exception.ApiException;
-import se.rlrio.phonebook.model.User;
-import se.rlrio.phonebook.repository.UserRepository;
-import se.rlrio.phonebook.service.impl.UserServiceImpl;
+import com.rlrio.phonebook.dto.UserDto;
+import com.rlrio.phonebook.exception.PhonebookException;
+import com.rlrio.phonebook.model.User;
+import com.rlrio.phonebook.repository.UserRepository;
+import com.rlrio.phonebook.service.impl.UserServiceImpl;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTestImpl {
 
     private static final int USER_ONE_ID = 1;
@@ -36,7 +35,7 @@ public class UserServiceTestImpl {
     private User user;
     private UserDto userDto;
 
-    @Before
+    @BeforeEach
     public void init() {
         user = new User();
         user.setId(USER_ONE_ID);
@@ -52,15 +51,14 @@ public class UserServiceTestImpl {
     public void findByIdAndUserExists() {
         Mockito.when(repoMock.findById(USER_ONE_ID)).thenReturn(Optional.of(user));
         UserDto test = userService.findById(USER_ONE_ID);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(repoMock, Mockito.times(1)).findById(ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(repoMock);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void findByIdAndUserIsNull() {
-        UserDto test = userService.findById(USER_ONE_ID);
-        Assert.assertNull(test);
+        Assertions.assertThrows(PhonebookException.class, () -> userService.findById(USER_ONE_ID));
         Mockito.verify(repoMock, Mockito.times(1)).findById(ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(repoMock);
     }
@@ -69,14 +67,14 @@ public class UserServiceTestImpl {
     public void createUserSuccess() {
         Mockito.when(repoMock.save(any())).thenReturn(user);
         UserDto test = userService.create(user);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(repoMock, Mockito.times(1)).save(any());
         Mockito.verifyNoMoreInteractions(repoMock);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void updateUserAndUserNotExists() {
-        userService.update(USER_ONE_ID, user);
+        Assertions.assertThrows(PhonebookException.class, () -> userService.update(USER_ONE_ID, user));
         Mockito.verify(repoMock, Mockito.times(1)).findById(ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(repoMock);
     }
@@ -90,7 +88,7 @@ public class UserServiceTestImpl {
         Mockito.when(repoMock.findById(any())).thenReturn(Optional.of(user));
         Mockito.when(repoMock.save(any())).thenReturn(newData);
         UserDto test = userService.update(USER_ONE_ID, newData);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(repoMock, Mockito.times(1)).save(any());
     }
 
@@ -100,7 +98,7 @@ public class UserServiceTestImpl {
         List<User> users = Arrays.asList(user);
         Mockito.when(repoMock.findAllByFirstNameIgnoreCaseStartingWith(ArgumentMatchers.anyString())).thenReturn(users);
         List<UserDto> userList = userService.findByName("TONY");
-        assertEquals(userList.size(), 1);
+        Assertions.assertEquals(userList.size(), 1);
         Mockito.verify(repoMock, Mockito.times(1)).findAllByFirstNameIgnoreCaseStartingWith(ArgumentMatchers.anyString());
         Mockito.verifyNoMoreInteractions(repoMock);
     }
@@ -110,15 +108,14 @@ public class UserServiceTestImpl {
         List<User> users = Arrays.asList(user);
         Mockito.when(repoMock.findAll()).thenReturn(users);
         List<UserDto> userList = userService.getAll();
-        assertEquals(userList.size(), users.size());
+        Assertions.assertEquals(userList.size(), users.size());
         Mockito.verify(repoMock, Mockito.times(1)).findAll();
         Mockito.verifyNoMoreInteractions(repoMock);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void deleteUserSuccess() {
-        userService.delete(USER_ONE_ID);
-        userService.findById(USER_ONE_ID);
+        Assertions.assertThrows(PhonebookException.class, () -> userService.delete(USER_ONE_ID));
     }
 
 }

@@ -1,0 +1,21 @@
+app:
+    description: ${app.name} is a Spring Boot application
+    name: Phonebook
+logging:
+    file:
+        name: phonebook_application.log
+server:
+    port: 8081
+spring:
+    datasource:
+        driverClassName: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/phonebook
+        username: postgres
+        password: postgres
+        continue-on-error: true
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none
+            show: true

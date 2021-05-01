@@ -1,21 +1,21 @@
 package service;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import se.rlrio.phonebook.dto.ContactDto;
-import se.rlrio.phonebook.exception.ApiException;
-import se.rlrio.phonebook.model.Contact;
-import se.rlrio.phonebook.model.User;
-import se.rlrio.phonebook.repository.ContactRepository;
-import se.rlrio.phonebook.repository.UserRepository;
-import se.rlrio.phonebook.service.impl.ContactServiceImpl;
+import com.rlrio.phonebook.dto.ContactDto;
+import com.rlrio.phonebook.exception.PhonebookException;
+import com.rlrio.phonebook.model.Contact;
+import com.rlrio.phonebook.model.User;
+import com.rlrio.phonebook.repository.ContactRepository;
+import com.rlrio.phonebook.repository.UserRepository;
+import com.rlrio.phonebook.service.impl.ContactServiceImpl;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,14 +24,13 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ContactServiceTestImpl {
     private static final int CONTACT_ONE_ID = 1;
     private static final int USER_ONE_ID = 1;
 
     @Mock
     private UserRepository userRepoMock;
-
 
     @Mock
     private ContactRepository contactRepoMock;
@@ -43,7 +42,7 @@ public class ContactServiceTestImpl {
     private User user;
     private ContactDto contactDto;
 
-    @Before
+    @BeforeEach
     public void init() {
         user = new User();
         user.setId(USER_ONE_ID);
@@ -67,26 +66,24 @@ public class ContactServiceTestImpl {
         Mockito.when(userRepoMock.existsById(USER_ONE_ID)).thenReturn(true);
         Mockito.when(contactRepoMock.findByIdAndUserId(CONTACT_ONE_ID, USER_ONE_ID)).thenReturn(Optional.of(contact));
         ContactDto test = contactService.findById(CONTACT_ONE_ID, USER_ONE_ID);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(contactRepoMock, Mockito.times(1))
                 .findByIdAndUserId(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(contactRepoMock);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void findByIdAndUserIsNull() {
-        ContactDto test = contactService.findById(CONTACT_ONE_ID, USER_ONE_ID);
-        Assert.assertNull(test);
+        Assertions.assertThrows(PhonebookException.class, () -> contactService.findById(CONTACT_ONE_ID, USER_ONE_ID));
         Mockito.verify(contactRepoMock, Mockito.times(1))
                 .findByIdAndUserId(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(contactRepoMock);
     }
 
 
-    @Test(expected = ApiException.class)
+    @Test
     public void createContactAndGetException() {
-        ContactDto test = contactService.create(USER_ONE_ID, contact);
-        Assert.assertNull(test);
+        Assertions.assertThrows(PhonebookException.class, () -> contactService.create(USER_ONE_ID, contact));
         Mockito.verify(contactRepoMock, Mockito.times(1))
                 .findByIdAndUserId(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(contactRepoMock);
@@ -97,16 +94,16 @@ public class ContactServiceTestImpl {
         Mockito.when(userRepoMock.findById(USER_ONE_ID)).thenReturn(Optional.of(user));
         Mockito.when(contactRepoMock.save(any())).thenReturn(contact);
         ContactDto test = contactService.create(USER_ONE_ID, contact);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(contactRepoMock, Mockito.times(1)).save(any());
         Mockito.verifyNoMoreInteractions(contactRepoMock);
     }
 
 
-    @Test(expected = ApiException.class)
+    @Test
     public void updateContactAndContactNotExists() {
         Mockito.when(userRepoMock.existsById(USER_ONE_ID)).thenReturn(true);
-        contactService.update(USER_ONE_ID, CONTACT_ONE_ID, contact);
+        Assertions.assertThrows(PhonebookException.class, () -> contactService.update(USER_ONE_ID, CONTACT_ONE_ID, contact));
         Mockito.verify(contactRepoMock, Mockito.times(1))
                 .findByIdAndUserId(ArgumentMatchers.anyInt(), ArgumentMatchers.anyInt());
         Mockito.verifyNoMoreInteractions(contactRepoMock);
@@ -124,7 +121,7 @@ public class ContactServiceTestImpl {
         Mockito.when(contactRepoMock.findById(any())).thenReturn(Optional.of(contact));
         Mockito.when(contactRepoMock.save(any())).thenReturn(newData);
         ContactDto test = contactService.update(USER_ONE_ID, CONTACT_ONE_ID, newData);
-        Assert.assertNotNull(test);
+        Assertions.assertNotNull(test);
         Mockito.verify(contactRepoMock, Mockito.times(1)).save(any());
     }
 
@@ -153,10 +150,9 @@ public class ContactServiceTestImpl {
         Mockito.verifyNoMoreInteractions(contactRepoMock);
     }
 
-    @Test(expected = ApiException.class)
+    @Test
     public void deleteUserSuccess() {
-        contactService.delete(CONTACT_ONE_ID, USER_ONE_ID);
-        contactService.findById(CONTACT_ONE_ID, USER_ONE_ID);
+        Assertions.assertThrows(PhonebookException.class, () -> contactService.delete(CONTACT_ONE_ID, USER_ONE_ID));
     }
 
 }

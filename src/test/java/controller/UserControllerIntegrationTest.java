@@ -2,25 +2,22 @@ package controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import se.rlrio.phonebook.Application;
-import se.rlrio.phonebook.controller.UserController;
-import se.rlrio.phonebook.model.User;
+import com.rlrio.phonebook.Application;
+import com.rlrio.phonebook.controller.UserController;
+import com.rlrio.phonebook.model.User;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 public class UserControllerIntegrationTest {
@@ -36,14 +33,13 @@ public class UserControllerIntegrationTest {
 
     private String json;
 
-    @Before
+    @BeforeEach
     public void setup() throws JsonProcessingException {
         User user = new User();
         user.setFirstName("Peter");
         user.setLastName("Parker");
         json = mapper.writeValueAsString(user);
     }
-
 
     @Test
     public void createUserSuccess() throws Exception {

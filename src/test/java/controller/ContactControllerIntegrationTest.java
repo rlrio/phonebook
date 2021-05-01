@@ -2,24 +2,27 @@ package controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import se.rlrio.phonebook.Application;
-import se.rlrio.phonebook.controller.ContactController;
-import se.rlrio.phonebook.model.Contact;
+import com.rlrio.phonebook.Application;
+import com.rlrio.phonebook.controller.ContactController;
+import com.rlrio.phonebook.model.Contact;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 public class ContactControllerIntegrationTest {
@@ -34,7 +37,7 @@ public class ContactControllerIntegrationTest {
 
     private String json;
 
-    @Before
+    @BeforeEach
     public void setup() throws JsonProcessingException {
         Contact contact = new Contact();
         contact.setFirstName("Bruce");
