@@ -33,20 +33,20 @@ public class ContactController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<ContactDto> createContact(@PathVariable("userId") int userId, @Valid @RequestBody Contact contact) {
         log.info("Contact with name:{} and phone number:{} has been created", contact.getFirstName() + " " + contact.getLastName(), contact.getPhone());
-        return new ResponseEntity<>(this.service.create(userId, contact), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(userId, contact), HttpStatus.CREATED);
     }
 
     @PutMapping({"/users/{userId}/contacts/{contactId}"})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<ContactDto> updateContact(@PathVariable("userId") int userId, @PathVariable("contactId") int contactId, @Valid @RequestBody Contact contact) {
-        log.info("Contact with this id:{} has been changed. New contact data is:{}", contactId, contact.toString());
-        return ResponseEntity.ok(this.service.update(userId, contactId, contact));
+        log.info("Contact with id:{} has been changed. New contact data is:{}", contactId, contact.toString());
+        return ResponseEntity.ok(service.update(userId, contactId, contact));
     }
 
     @DeleteMapping({"/users/{userId}/contacts/{contactId}"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<HttpStatus> deleteContact(@PathVariable("userId") int userId, @PathVariable("contactId") int contactId) {
-        this.service.delete(userId, contactId);
+        service.delete(userId, contactId);
         log.info("Contact with id:{} has been deleted", contactId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -54,7 +54,7 @@ public class ContactController {
     @DeleteMapping({"/users/{userId}/contacts"})
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ResponseEntity<HttpStatus> deleteAllContacts(@PathVariable("userId") int userId) {
-        this.service.deleteAllContacts(userId);
+        service.deleteAllContacts(userId);
         log.info("Contacts for userId:{} have been deleted", userId);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -62,19 +62,19 @@ public class ContactController {
     @GetMapping({"/users/{userId}/contacts"})
     public ResponseEntity<List<ContactDto>> getAllContacts(@PathVariable("userId") int userId) {
         log.info("Contacts of userId:{} were found", userId);
-        return ResponseEntity.ok(this.service.getAll(userId));
+        return ResponseEntity.ok(service.getAll(userId));
     }
 
     @GetMapping({"/users/{userId}/contacts/{contactId}"})
     public ResponseEntity<ContactDto> getContactById(@PathVariable("userId") int userId, @PathVariable("contactId") int contactId) {
         log.info("Contact with id:{} of userId:{} was found", contactId, userId);
-        return ResponseEntity.ok(this.service.findById(contactId, userId));
+        return ResponseEntity.ok(service.findById(contactId, userId));
     }
 
     @GetMapping({"users/{userId}/contacts/search"})
     public ResponseEntity<List<ContactDto>> getContactsByPhone(@PathVariable("userId") int userId, @RequestParam String phone) {
         log.info("Contacts of userId:{} with phone:{} were found", userId, phone);
-        return ResponseEntity.ok(this.service.findByPhone(phone, userId));
+        return ResponseEntity.ok(service.findByPhone(phone, userId));
     }
 
 }

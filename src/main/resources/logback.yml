@@ -11,7 +11,7 @@ configuration:
       rollingPolicy:
         fileNamePattern: 'logs/archived/app.%d{yyyy-MM-dd}.%i.log.gz'
         maxFileSize: 10MB
-        totalSizeCap: 20GB
+        totalSizeCap: 200MB
         maxHistory: '60'
         class: ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy
       encoder:

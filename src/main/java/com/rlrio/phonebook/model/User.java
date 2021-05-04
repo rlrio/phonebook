@@ -1,8 +1,12 @@
 package com.rlrio.phonebook.model;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -15,8 +19,12 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "users")
 @EqualsAndHashCode
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,22 +34,4 @@ public class User {
     @NotBlank
     private String firstName;
     private String lastName;
-
-    public User() {
-    }
-
-    public User(@NotNull String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "User(" +
-                "id=" + this.getId() +
-                ", firstName=" + this.getFirstName() +
-                ", lastName=" + this.getLastName() +
-                ')';
-    }
-
 }

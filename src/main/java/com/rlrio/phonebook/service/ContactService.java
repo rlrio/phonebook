@@ -19,5 +19,4 @@ public interface ContactService {
     List<ContactDto> findByPhone(String phone, int userId);
 
     ContactDto findById(int contactId, int userId);
-
 }

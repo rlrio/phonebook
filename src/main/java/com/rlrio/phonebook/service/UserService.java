@@ -5,7 +5,6 @@ import com.rlrio.phonebook.model.User;
 import java.util.List;
 
 public interface UserService {
-
     UserDto create(User user);
 
     UserDto update(int id, User user);
