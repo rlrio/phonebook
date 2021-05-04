@@ -1,4 +1,4 @@
-# REST API with Spring Boot, H2, JPA, JUnit
+# REST API with Spring Boot, PostgreSQL, JPA, JUnit
 This repository provides source code of a phonebook web app, allowing CRUD operations on users and contacts via RESTful API.
 
   
@@ -6,9 +6,12 @@ This repository provides source code of a phonebook web app, allowing CRUD opera
 ## Steps to Setup
 
 **1. Clone this app**
-> https://github.com/rlrio/phonebook.git  
+> https://github.com/rlrio/phonebook.git 
 
-**2. Build and run the app using maven**
+**2. Run SQL scripts**
+> schema.sql, data.sql
+
+**3. Build and run the app using maven**
 > **mvn spring-boot:run**  
    
 OR alternatively:  
@@ -16,8 +19,9 @@ OR alternatively:
 
 ## Explore
   
-!This app runs on localhost:8081   
-**Users**
+**!** This app runs on localhost:8081     
+  
+  **Users**
 > GET /users
 
 > GET /users/{userId}
